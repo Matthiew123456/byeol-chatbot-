@@ -1,5 +1,5 @@
 {
   "rewrites": [
-    { "source": "/bot", "destination": "/index.html" }
+    { "source": "/", "destination": "/index.html" }
   ]
 }
