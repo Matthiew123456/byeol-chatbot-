@@ -42,14 +42,26 @@
       botMessage.textContent = '🤖 Léa : ...';
       messages.appendChild(botMessage);
 
-      const res = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text })
-      });
+      try {
+        const res = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: text })
+        });
 
-      const data = await res.json();
-      botMessage.textContent = '🤖 Léa : ' + data.response;
+        const data = await res.json();
+
+        if (res.ok && data.response) {
+          botMessage.textContent = '🤖 Léa : ' + data.response;
+        } else {
+          console.error('❌ Erreur API OpenAI :', data);
+          botMessage.textContent = '🤖 Léa : Une erreur est survenue. Veuillez réessayer plus tard.';
+        }
+      } catch (err) {
+        console.error('❌ Erreur réseau ou serveur :', err);
+        botMessage.textContent = '🤖 Léa : Erreur de connexion au serveur.';
+      }
+
       messages.scrollTop = messages.scrollHeight;
     }
   </script>
