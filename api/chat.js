@@ -1,5 +1,8 @@
 import { Configuration, OpenAIApi } from 'openai';
 
+// Affiche la clé pour diagnostic (ne t’inquiète pas, elle ne s’affiche que dans les logs Vercel)
+console.log("🧪 OPENAI_API_KEY:", process.env.OPENAI_API_KEY);
+
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
@@ -35,7 +38,7 @@ export default async function handler(req, res) {
     const response = completion.data.choices[0].message.content;
     res.status(200).json({ response });
   } catch (error) {
-    console.error('Erreur OpenAI :', error); // Affiche l’erreur complète dans la console Vercel
+    console.error('Erreur OpenAI :', error);
     res.status(500).json({
       error: error.message || 'Erreur lors de l’appel à OpenAI'
     });
