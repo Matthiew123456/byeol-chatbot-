@@ -35,7 +35,9 @@ export default async function handler(req, res) {
     const response = completion.data.choices[0].message.content;
     res.status(200).json({ response });
   } catch (error) {
-    console.error('Erreur OpenAI :', error.message);
-    res.status(500).json({ error: 'Erreur lors de l’appel à OpenAI' });
+    console.error('Erreur OpenAI :', error); // Affiche l’erreur complète dans la console Vercel
+    res.status(500).json({
+      error: error.message || 'Erreur lors de l’appel à OpenAI'
+    });
   }
 }
